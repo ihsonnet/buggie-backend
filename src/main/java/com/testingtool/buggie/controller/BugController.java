@@ -2,14 +2,14 @@ package com.testingtool.buggie.controller;
 
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddBugRequest;
+import com.testingtool.buggie.dto.request.ChangeStatusRequest;
 import com.testingtool.buggie.model.Bug;
 import com.testingtool.buggie.services.BugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bug")
@@ -22,4 +22,33 @@ public class BugController {
         return bugService.addBug(addBugRequest);
     }
 
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<Bug>>> getBugs(@RequestParam(required = false) String bugTitle , String createdBy, String assignTo, String projectId,
+    @RequestHeader(name = "Authorization", required = false) String token){
+        return bugService.getBugs(bugTitle,createdBy,assignTo,projectId,token);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse<List<Bug>>> getAllBugs(){
+        return bugService.getAllBugs();
+    }
+    @GetMapping("/by-creator/{id}")
+    public ResponseEntity<ApiResponse<List<Bug>>> getBugByCreator(@PathVariable String id){
+        return bugService.getBugByCreator(id);
+    }
+
+    @GetMapping("/assigned-to/{id}")
+    public ResponseEntity<ApiResponse<List<Bug>>> getBugByAssigned(@PathVariable String id){
+        return bugService.getBugByAssigned(id);
+    }
+
+    @PutMapping("/change-status")
+    public ResponseEntity<ApiResponse<Bug>> changeBugStatus(@RequestBody ChangeStatusRequest changeStatusRequest){
+        return bugService.changeBugStatus(changeStatusRequest);
+    }
+
+    @PutMapping("/change-approve-status")
+    public ResponseEntity<ApiResponse<Bug>> changeApproveStatus(@RequestBody ChangeStatusRequest changeStatusRequest){
+        return bugService.changeApproveStatus(changeStatusRequest);
+    }
 }

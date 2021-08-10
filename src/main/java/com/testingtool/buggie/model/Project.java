@@ -1,9 +1,12 @@
 package com.testingtool.buggie.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.testingtool.buggie.jwt.model.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,11 +20,9 @@ public class Project {
     private String id;
     private String name;
     private String description;
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "projects_members",
-//            joinColumns = @JoinColumn(name = "project_id"),
-//            inverseJoinColumns = @JoinColumn(name = "member_id"))
-//    private Set<User> members = new HashSet<>();
+    @ManyToMany
+    @JsonIgnore
+    private List<User> members;
     private String created_by;
     private String created_on;
 
