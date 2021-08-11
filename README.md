@@ -1,6 +1,7 @@
 # Buggie-backend
 
 [Live-Documentation](https://buggie-backend.herokuapp.com/swagger-ui.html)
+
 [Check Server](https://buggie-backend.herokuapp.com/auth/serverCheck)
 
 ### Technology Used:
