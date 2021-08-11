@@ -50,7 +50,13 @@ public class ProjectServiceImpl implements ProjectService {
         projectList.add(project);
         user.setProjects(projectList);
         userRepository.save(user);
-        return new ResponseEntity<>(new ApiResponse<>(200,"Created",project),HttpStatus.CREATED);
+        System.out.println(user);
+
+        List<User> projectUser = new ArrayList<>();
+        projectUser.add(user);
+        project.setMembers(projectUser);
+        projectRepository.save(project);
+        return new ResponseEntity<>(new ApiResponse<>(200,"Created Successfully!",null),HttpStatus.CREATED);
     }
 
     @Override
@@ -67,10 +73,24 @@ public class ProjectServiceImpl implements ProjectService {
             projectList.add(project);
             user.setProjects(projectList);
             userRepository.save(user);
-            return new ResponseEntity<>(new ApiResponse<>(200,"Created",null),HttpStatus.OK);
+
+
+            List<User> projectUser = project.getMembers();
+            projectUser.add(user);
+            project.setMembers(projectUser);
+            projectRepository.save(project);
+            return new ResponseEntity<>(new ApiResponse<>(200,"Assigned Successfully!",null),HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(new ApiResponse<>(200,"User Not Found",null),HttpStatus.OK);
+            return new ResponseEntity<>(new ApiResponse<>(200,"User Not Found!",null),HttpStatus.OK);
         }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<List<User>>> getProjectMembers(String id) {
+        Project project = projectRepository.findById(id).get();
+        List<User> users = project.getMembers();
+
+        return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",users),HttpStatus.OK);
     }
 }

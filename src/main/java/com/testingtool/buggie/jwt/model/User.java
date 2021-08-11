@@ -1,6 +1,7 @@
 package com.testingtool.buggie.jwt.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.testingtool.buggie.model.Project;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

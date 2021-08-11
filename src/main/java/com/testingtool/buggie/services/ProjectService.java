@@ -15,4 +15,6 @@ public interface ProjectService {
     ResponseEntity<ApiResponse<Project>> AddNewProject(AddProjectRequest addProjectRequest);
 
     ResponseEntity<ApiResponse<User>> AssignProject(AssignProjectRequest assignProjectRequest);
+
+    ResponseEntity<ApiResponse<List<User>>> getProjectMembers(String id);
 }

@@ -47,8 +47,8 @@ public class SpringFoxConfig {
 
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
-                "Bookommerce Spring Boot REST API",
-                "Spring Boot REST API for Bookommerce",
+                "Buggie Spring Boot REST API",
+                "Spring Boot REST API for Buggie - a bug Reporting System.",
                 "Alpha-0.1",
                 "Terms of service",
                 "Injamamul haque Sonet",

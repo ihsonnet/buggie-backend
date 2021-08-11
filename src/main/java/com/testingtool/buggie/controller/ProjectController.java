@@ -33,4 +33,9 @@ public class ProjectController {
     public ResponseEntity<ApiResponse<User>> AssignProject(@RequestBody AssignProjectRequest assignProjectRequest){
         return projectService.AssignProject(assignProjectRequest);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<List<User>>> getProjectMembers(@RequestParam String id){
+        return projectService.getProjectMembers(id);
+    }
 }
