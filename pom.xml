@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.testing-tool</groupId>
-	<artifactId>dbug</artifactId>
+	<artifactId>buggie</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dbug</name>
-	<description>Dbug is a bug finding tool for tester</description>
+	<name>buggie</name>
+	<description>Buggie is a bug finding tool for tester</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
