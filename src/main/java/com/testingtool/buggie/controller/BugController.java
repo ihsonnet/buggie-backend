@@ -22,16 +22,22 @@ public class BugController {
         return bugService.addBug(addBugRequest);
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<Bug>>> getBugs(@RequestParam(required = false) String bugTitle , String createdBy, String assignTo, String projectId,
-    @RequestHeader(name = "Authorization", required = false) String token){
-        return bugService.getBugs(bugTitle,createdBy,assignTo,projectId,token);
-    }
+//    @GetMapping
+//    public ResponseEntity<ApiResponse<List<Bug>>> getBugs(@RequestParam(required = false) String bugTitle , String createdBy, String assignTo, String projectId,
+//    @RequestHeader(name = "Authorization", required = false) String token){
+//        return bugService.getBugs(bugTitle,createdBy,assignTo,projectId,token);
+//    }
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<List<Bug>>> getAllBugs(){
         return bugService.getAllBugs();
     }
+
+    @GetMapping("/by-team/{id}")
+    public ResponseEntity<ApiResponse<List<Bug>>> getBugByTeam(@PathVariable String id){
+        return bugService.getBugByTeam(id);
+    }
+
     @GetMapping("/by-creator/{id}")
     public ResponseEntity<ApiResponse<List<Bug>>> getBugByCreator(@PathVariable String id){
         return bugService.getBugByCreator(id);

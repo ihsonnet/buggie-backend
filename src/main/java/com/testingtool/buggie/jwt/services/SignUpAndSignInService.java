@@ -11,6 +11,8 @@ import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.jwt.repository.RoleRepository;
 import com.testingtool.buggie.jwt.repository.UserRepository;
 import com.testingtool.buggie.jwt.security.jwt.JwtProvider;
+import com.testingtool.buggie.model.Team;
+import com.testingtool.buggie.repository.TeamRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -42,6 +44,8 @@ public class SignUpAndSignInService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private TeamRepository teamRepository;
 
 //    private final AreaNameRepository areaNameRepository;
 
@@ -68,11 +72,17 @@ public class SignUpAndSignInService {
         user.setCreatedBy(signUpRequest.getCreatedBy());
         user.setCreatedOn(signUpRequest.getCreatedOn());
         userRepository.saveAndFlush(user);
-
-        UUID newId = UUID.randomUUID();
-        System.out.println("1");
-
-
+        System.out.println(1);
+        if (signUpRequest.getRole().contains("PROJECT_MANAGER")){
+            Team team = new Team();
+            UUID teamId = UUID.randomUUID();
+            String teamUuid = teamId.toString();
+            team.setId(teamUuid);
+            team.setName(signUpRequest.getFirstName()+"'s Team");
+            team.setCreatedBy(uuid);
+            teamRepository.save(team);
+        }
+        System.out.println(2);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),

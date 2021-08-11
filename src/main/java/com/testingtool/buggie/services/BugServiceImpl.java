@@ -38,9 +38,10 @@ public class BugServiceImpl implements BugService{
         bug.setDescription(addBugRequest.getDescription());
         bug.setStatus("New");
         bug.setProjectId(addBugRequest.getProjectId());
+        bug.setTeamId(addBugRequest.getTeamId());
         bug.setAssignedTo(addBugRequest.getAssignedTo());
         bug.setCreatedBy(addBugRequest.getCreatedBy());
-        bug.setUpdatedBy(addBugRequest.getUpdatedBy());
+        bug.setUpdatedBy(addBugRequest.getCreatedOn());
         bug.setApproveStatus("No Action");
 
 //        long timestamp = System.currentTimeMillis() / 1000;
@@ -126,6 +127,18 @@ public class BugServiceImpl implements BugService{
         }
         else {
             return new ResponseEntity<>(new ApiResponse<>(200,"Bug Not Found",null),HttpStatus.OK);
+        }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<List<Bug>>> getBugByTeam(String id) {
+        List<Bug> bugList = bugRepository.findByTeamId(id);
+        if (!bugList.isEmpty()){
+
+            return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",bugList),HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",null),HttpStatus.OK);
         }
     }
 

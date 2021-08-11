@@ -11,4 +11,5 @@ public interface BugRepository extends JpaRepository<Bug,String > {
 
     List<Bug> findByCreatedBy(String id);
     List<Bug> findByAssignedTo(String id);
+    List<Bug> findByTeamId(String id);
 }

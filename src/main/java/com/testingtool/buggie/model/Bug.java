@@ -22,6 +22,7 @@ public class Bug {
     private String description;
     private String status;
     private String projectId;
+    private String teamId;
     private String createdBy;
     private String createdOn;
     private String assignedTo;

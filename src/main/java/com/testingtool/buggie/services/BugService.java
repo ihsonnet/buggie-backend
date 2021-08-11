@@ -22,4 +22,6 @@ public interface BugService {
     ResponseEntity<ApiResponse<Bug>> changeBugStatus(ChangeStatusRequest changeStatusRequest);
 
     ResponseEntity<ApiResponse<Bug>> changeApproveStatus(ChangeStatusRequest changeStatusRequest);
+
+    ResponseEntity<ApiResponse<List<Bug>>> getBugByTeam(String id);
 }
