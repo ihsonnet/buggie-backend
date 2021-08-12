@@ -45,7 +45,8 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.save(project);
 
         System.out.println(addProjectRequest.getCreated_by());
-        User user = userRepository.getById(addProjectRequest.getCreated_by());
+//        User user = userRepository.getById(addProjectRequest.getCreated_by());
+        User user = userRepository.findByUsername(addProjectRequest.getCreated_by()).get();
         List<Project> projectList = user.getProjects();
         projectList.add(project);
         user.setProjects(projectList);
