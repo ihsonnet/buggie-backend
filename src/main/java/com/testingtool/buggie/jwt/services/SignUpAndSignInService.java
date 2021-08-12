@@ -64,7 +64,8 @@ public class SignUpAndSignInService {
         user.setId(uuid);
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
-        user.setUsername(signUpRequest.getEmail() + signUpRequest.getPhoneNo());
+        String[] arrOfUsername = signUpRequest.getEmail().split("@", 2);
+        user.setUsername(arrOfUsername[0]);
         user.setEmail(signUpRequest.getEmail());
         user.setPhoneNo(signUpRequest.getPhoneNo());
         user.setPassword(encoder.encode(signUpRequest.getPassword()));
@@ -288,12 +289,16 @@ public class SignUpAndSignInService {
         loggedUserDetailsResponse.setIsAuthenticated(authentication.isAuthenticated());
 
         Optional<User> user = userRepository.findByUsername(authentication.getName());
+        Team team = teamRepository.findByCreatedBy(user.get().getId()).get();
 
+        loggedUserDetailsResponse.setId(user.get().getId());
         loggedUserDetailsResponse.setFirstName(user.get().getFirstName());
         loggedUserDetailsResponse.setLastName(user.get().getLastName());
+        loggedUserDetailsResponse.setUsername(user.get().getUsername());
         loggedUserDetailsResponse.setEmail(user.get().getEmail());
         loggedUserDetailsResponse.setPhoneNo(user.get().getPhoneNo());
         loggedUserDetailsResponse.setProjects(user.get().getProjects());
+        loggedUserDetailsResponse.setTeamDetails(team);
         return loggedUserDetailsResponse;
     }
 
