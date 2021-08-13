@@ -71,15 +71,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable().
                 authorizeRequests()
-//                .antMatchers("/**").permitAll()
-//                .antMatchers("/project/**").authenticated()
-//                .antMatchers("/bug/**").authenticated()
-//                .antMatchers("/auth/signup").authenticated()
+
+                .antMatchers("/project/**").authenticated()
+                .antMatchers("/bug/**").authenticated()
+                .antMatchers("/auth/user-info").authenticated()
 //                .antMatchers("/book").access("hasAuthority('ADMIN')")
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
