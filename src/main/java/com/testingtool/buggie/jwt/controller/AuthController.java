@@ -1,7 +1,10 @@
 package com.testingtool.buggie.jwt.controller;
 
+import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.jwt.dto.request.*;
 import com.testingtool.buggie.jwt.dto.response.LoggedUserDetailsResponse;
+import com.testingtool.buggie.jwt.dto.response.UserResponse;
+import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.jwt.services.SignUpAndSignInService;
 import javassist.bytecode.DuplicateMemberException;
 import lombok.AllArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -53,4 +57,10 @@ public class AuthController {
 
         return signUpAndSignInService.getLoggedUserDetails(authentication);
     }
+
+    @GetMapping("user/createdBy/{id}")
+    public ResponseEntity<ApiResponse<List<User>>> getTeamMembers(@RequestParam String id){
+        return signUpAndSignInService.getTeamMembers(id);
+    }
+
 }

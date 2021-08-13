@@ -5,12 +5,15 @@ import com.testingtool.buggie.dto.request.AddBugRequest;
 import com.testingtool.buggie.dto.request.ChangeStatusRequest;
 import com.testingtool.buggie.model.Bug;
 import com.testingtool.buggie.services.BugService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor
 @RestController
 @RequestMapping("/bug")
 public class BugController {

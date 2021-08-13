@@ -6,12 +6,15 @@ import com.testingtool.buggie.dto.request.AssignProjectRequest;
 import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.model.Project;
 import com.testingtool.buggie.services.ProjectService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor
 @RestController
 @RequestMapping("/project")
 public class ProjectController {

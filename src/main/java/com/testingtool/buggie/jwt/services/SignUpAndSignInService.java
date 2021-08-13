@@ -1,5 +1,6 @@
 package com.testingtool.buggie.jwt.services;
 
+import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.jwt.dto.request.LoginForm;
 import com.testingtool.buggie.jwt.dto.request.SignUpForm;
 import com.testingtool.buggie.jwt.dto.response.JwtResponse;
@@ -135,7 +136,7 @@ public class SignUpAndSignInService {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
-                UserResponse userResponse = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(),
+                UserResponse userResponse = new UserResponse(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(),
                         user.getLastName(), user.getPhoneNo(), getRolesStringFromRole(user.getRoles()), user.getCreatedBy(), user.getCreatedOn());
 
                 HttpHeaders httpHeaders = new HttpHeaders();
@@ -303,4 +304,8 @@ public class SignUpAndSignInService {
     }
 
 
+    public ResponseEntity<ApiResponse<List<User>>> getTeamMembers(String id) {
+        List<User> users = userRepository.findByCreatedBy(id);
+        return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",users),HttpStatus.OK);
+    }
 }
