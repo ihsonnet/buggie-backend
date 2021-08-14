@@ -10,6 +10,8 @@ import lombok.*;
 public class ChangeStatusRequest {
     private String bugId;
     private String status;
+    private String comment;
     private String userId;
     private String updateTime;
+    private String updateBy;
 }

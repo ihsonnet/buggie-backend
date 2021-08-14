@@ -75,16 +75,16 @@ public class SignUpAndSignInService {
         user.setCreatedOn(signUpRequest.getCreatedOn());
         userRepository.saveAndFlush(user);
         System.out.println(1);
-        if (signUpRequest.getRole().contains("PROJECT_MANAGER")){
-            Team team = new Team();
-            UUID teamId = UUID.randomUUID();
-            String teamUuid = teamId.toString();
-            team.setId(teamUuid);
-            team.setName(signUpRequest.getFirstName()+"'s Team");
-            team.setCreatedBy(uuid);
-            teamRepository.save(team);
-        }
-        System.out.println(2);
+//        if (signUpRequest.getRole().contains("PROJECT_MANAGER")){
+//            Team team = new Team();
+//            UUID teamId = UUID.randomUUID();
+//            String teamUuid = teamId.toString();
+//            team.setId(teamUuid);
+//            team.setName(signUpRequest.getFirstName()+"'s Team");
+//            team.setCreatedBy(uuid);
+//            teamRepository.save(team);
+//        }
+//        System.out.println(2);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
@@ -290,7 +290,7 @@ public class SignUpAndSignInService {
         loggedUserDetailsResponse.setIsAuthenticated(authentication.isAuthenticated());
 
         Optional<User> user = userRepository.findByUsername(authentication.getName());
-        Team team = teamRepository.findByCreatedBy(user.get().getId()).get();
+//        Team team = teamRepository.findByCreatedBy(user.get().getId()).get();
 
         loggedUserDetailsResponse.setId(user.get().getId());
         loggedUserDetailsResponse.setFirstName(user.get().getFirstName());
@@ -299,7 +299,7 @@ public class SignUpAndSignInService {
         loggedUserDetailsResponse.setEmail(user.get().getEmail());
         loggedUserDetailsResponse.setPhoneNo(user.get().getPhoneNo());
         loggedUserDetailsResponse.setProjects(user.get().getProjects());
-        loggedUserDetailsResponse.setTeamDetails(team);
+//        loggedUserDetailsResponse.setTeamDetails(team);
         return loggedUserDetailsResponse;
     }
 

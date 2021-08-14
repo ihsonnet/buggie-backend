@@ -21,6 +21,7 @@ public class Bug {
     private String type;
     private String description;
     private String status;
+    private String comment;
     private String projectId;
     private String teamId;
     private String createdBy;
@@ -29,4 +30,5 @@ public class Bug {
     private String updatedBy;
     private String updatedOn;
     private String approveStatus;
+    private String approveComment;
 }

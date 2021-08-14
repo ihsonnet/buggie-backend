@@ -2,6 +2,8 @@ package com.testingtool.buggie.dto.request;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -10,4 +12,5 @@ import lombok.*;
 public class AssignProjectRequest {
     private String projectId;
     private String userEmail;
+    private Set<String> userRole;
 }

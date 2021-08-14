@@ -43,6 +43,8 @@ public class BugServiceImpl implements BugService{
         bug.setCreatedBy(addBugRequest.getCreatedBy());
         bug.setUpdatedBy(addBugRequest.getCreatedOn());
         bug.setApproveStatus("No Action");
+        bug.setComment("");
+        bug.setApproveComment("");
 
 //        long timestamp = System.currentTimeMillis() / 1000;
 //        bug.setCreatedOn(Long.toString(timestamp));
@@ -102,6 +104,8 @@ public class BugServiceImpl implements BugService{
         bug.setStatus(changeStatusRequest.getStatus());
         bug.setUpdatedBy(changeStatusRequest.getUserId());
         bug.setUpdatedOn(changeStatusRequest.getUpdateTime());
+        bug.setComment(changeStatusRequest.getComment());
+        bug.setUpdatedBy(changeStatusRequest.getUpdateBy());
 
         Optional<Bug> bugOptional = bugRepository.findById(changeStatusRequest.getBugId());
         if (bugOptional.isPresent()){
@@ -119,6 +123,8 @@ public class BugServiceImpl implements BugService{
         bug.setApproveStatus(changeStatusRequest.getStatus());
         bug.setUpdatedBy(changeStatusRequest.getUserId());
         bug.setUpdatedOn(changeStatusRequest.getUpdateTime());
+        bug.setApproveComment(changeStatusRequest.getComment());
+        bug.setUpdatedBy(changeStatusRequest.getUpdateBy());
 
         Optional<Bug> bugOptional = bugRepository.findById(changeStatusRequest.getBugId());
         if (bugOptional.isPresent()){

@@ -63,6 +63,7 @@ public class User {
     private String email;
 
     @ManyToMany
+    @JsonIgnore
     private List<Project> projects;
 
     private String createdBy;

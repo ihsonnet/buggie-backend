@@ -3,9 +3,15 @@ package com.testingtool.buggie.services;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddProjectRequest;
 import com.testingtool.buggie.dto.request.AssignProjectRequest;
+import com.testingtool.buggie.dto.response.ProjectInfoResponse;
+import com.testingtool.buggie.jwt.model.Role;
+import com.testingtool.buggie.jwt.model.RoleName;
 import com.testingtool.buggie.jwt.model.User;
+import com.testingtool.buggie.jwt.repository.RoleRepository;
 import com.testingtool.buggie.jwt.repository.UserRepository;
+import com.testingtool.buggie.model.Bug;
 import com.testingtool.buggie.model.Project;
+import com.testingtool.buggie.repository.BugRepository;
 import com.testingtool.buggie.repository.ProjectRepository;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import javax.validation.ValidationException;
+import java.util.*;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -25,6 +29,10 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private BugRepository bugRepository;
 
     @Override
     public ResponseEntity<ApiResponse<List<Project>>> getProjectList() {
@@ -74,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
             projectList.add(project);
             user.setProjects(projectList);
             userRepository.save(user);
-
+            user.setRoles(getRolesFromStringToRole(assignProjectRequest.getUserRole()));
 
             List<User> projectUser = project.getMembers();
             projectUser.add(user);
@@ -94,4 +102,37 @@ public class ProjectServiceImpl implements ProjectService {
 
         return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",users),HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ApiResponse<ProjectInfoResponse>> getProjectInfo(String id) {
+        Project project = projectRepository.getById(id);
+        List<Bug> bugs = bugRepository.findByProjectId(id);
+
+        ProjectInfoResponse projectInfoResponse = new ProjectInfoResponse();
+
+        projectInfoResponse.setId(project.getId());
+        projectInfoResponse.setName(project.getName());
+        projectInfoResponse.setDescription(project.getDescription());
+        projectInfoResponse.setCreated_by(project.getCreated_by());
+        projectInfoResponse.setMembers((project.getMembers()));
+        projectInfoResponse.setBugs((bugs));
+
+        return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",projectInfoResponse),HttpStatus.OK);
+    }
+
+    public Set<Role> getRolesFromStringToRole(Set<String> roles2) {
+        Set<Role> roles = new HashSet<>();
+        for (String role : roles2) {
+            System.out.println(role);
+            Optional<Role> roleOptional = roleRepository.findByName(RoleName.valueOf(role));
+//            System.out.println(roleOptional.get());
+
+            if (!roleOptional.isPresent()) {
+                throw new ValidationException("Role '" + role + "' does not exist.");
+            }
+            roles.add(roleOptional.get());
+        }
+        return roles;
+    }
 }
+
