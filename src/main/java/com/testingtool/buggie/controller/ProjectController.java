@@ -3,6 +3,7 @@ package com.testingtool.buggie.controller;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddProjectRequest;
 import com.testingtool.buggie.dto.request.AssignProjectRequest;
+import com.testingtool.buggie.dto.request.GetDeveloperRequest;
 import com.testingtool.buggie.dto.response.ProjectInfoResponse;
 import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.model.Project;
@@ -47,4 +48,9 @@ public class ProjectController {
     public ResponseEntity<ApiResponse<ProjectInfoResponse>> getProjectInfo(@RequestParam String id){
         return projectService.getProjectInfo(id);
     }
+
+//    @GetMapping("getDeveloper/{id}")
+//    public List<GetDeveloperRequest> getDeveloperList(@RequestParam String id){
+//        return projectService.getDeveloperList(id);
+//    }
 }

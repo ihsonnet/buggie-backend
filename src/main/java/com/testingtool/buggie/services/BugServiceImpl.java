@@ -41,7 +41,9 @@ public class BugServiceImpl implements BugService{
         bug.setTeamId(addBugRequest.getTeamId());
         bug.setAssignedTo(addBugRequest.getAssignedTo());
         bug.setCreatedBy(addBugRequest.getCreatedBy());
-        bug.setUpdatedBy(addBugRequest.getCreatedOn());
+        bug.setUpdatedBy(addBugRequest.getCreatedBy());
+        bug.setCreatedOn(addBugRequest.getCreatedOn());
+        bug.setUpdatedOn(addBugRequest.getCreatedOn());
         bug.setApproveStatus("No Action");
         bug.setComment("");
         bug.setApproveComment("");

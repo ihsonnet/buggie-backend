@@ -3,6 +3,7 @@ package com.testingtool.buggie.services;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddProjectRequest;
 import com.testingtool.buggie.dto.request.AssignProjectRequest;
+import com.testingtool.buggie.dto.request.GetDeveloperRequest;
 import com.testingtool.buggie.dto.response.ProjectInfoResponse;
 import com.testingtool.buggie.jwt.model.Role;
 import com.testingtool.buggie.jwt.model.RoleName;
@@ -118,6 +119,19 @@ public class ProjectServiceImpl implements ProjectService {
         projectInfoResponse.setBugs((bugs));
 
         return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",projectInfoResponse),HttpStatus.OK);
+    }
+
+    @Override
+    public List<GetDeveloperRequest> getDeveloperList(String id) {
+        Project project = projectRepository.getById(id);
+        List<User> users = project.getMembers();
+        List<GetDeveloperRequest> getDeveloperRequests;
+        for (User user:users) {
+            if (user.getRoles().contains("DEVELOPER")){
+
+            }
+        }
+        return null;
     }
 
     public Set<Role> getRolesFromStringToRole(Set<String> roles2) {
