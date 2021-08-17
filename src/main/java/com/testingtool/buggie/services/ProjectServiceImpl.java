@@ -11,10 +11,11 @@ import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.jwt.repository.RoleRepository;
 import com.testingtool.buggie.jwt.repository.UserRepository;
 import com.testingtool.buggie.model.Bug;
+import com.testingtool.buggie.model.Member;
 import com.testingtool.buggie.model.Project;
 import com.testingtool.buggie.repository.BugRepository;
+import com.testingtool.buggie.repository.MemberRepository;
 import com.testingtool.buggie.repository.ProjectRepository;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,8 @@ public class ProjectServiceImpl implements ProjectService {
     private RoleRepository roleRepository;
     @Autowired
     private BugRepository bugRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Override
     public ResponseEntity<ApiResponse<List<Project>>> getProjectList() {
@@ -62,12 +65,41 @@ public class ProjectServiceImpl implements ProjectService {
         userRepository.save(user);
         System.out.println(user);
 
-        List<User> projectUser = new ArrayList<>();
-        projectUser.add(user);
+        Member member = new Member(null,user,"PROJECT_MANAGER");
+        memberRepository.save(member);
+
+        List<Member> projectUser = new ArrayList<Member>();
+        projectUser.add(member);
         project.setMembers(projectUser);
         projectRepository.save(project);
         return new ResponseEntity<>(new ApiResponse<>(200,"Created Successfully!",null),HttpStatus.CREATED);
     }
+// @Override
+//    public ResponseEntity<ApiResponse<Project>> AddNewProject(AddProjectRequest addProjectRequest) {
+//        Project project = new Project();
+//        UUID id = UUID.randomUUID();
+//        String uuid = id.toString();
+//        project.setId(uuid);
+//        project.setName(addProjectRequest.getName());
+//        project.setDescription(addProjectRequest.getDescription());
+//        project.setCreated_by(addProjectRequest.getCreated_by());
+//        projectRepository.save(project);
+//
+//        System.out.println(addProjectRequest.getCreated_by());
+////        User user = userRepository.getById(addProjectRequest.getCreated_by());
+//        User user = userRepository.findByUsername(addProjectRequest.getCreated_by()).get();
+//        List<Project> projectList = user.getProjects();
+//        projectList.add(project);
+//        user.setProjects(projectList);
+//        userRepository.save(user);
+//        System.out.println(user);
+//
+//        List<User> projectUser = new ArrayList<>();
+//        projectUser.add(user);
+//        project.setMembers(projectUser);
+//        projectRepository.save(project);
+//        return new ResponseEntity<>(new ApiResponse<>(200,"Created Successfully!",null),HttpStatus.CREATED);
+//    }
 
     @Override
     public ResponseEntity<ApiResponse<User>> AssignProject(AssignProjectRequest assignProjectRequest) {
@@ -83,10 +115,12 @@ public class ProjectServiceImpl implements ProjectService {
             projectList.add(project);
             user.setProjects(projectList);
             userRepository.save(user);
-            user.setRoles(getRolesFromStringToRole(assignProjectRequest.getUserRole()));
 
-            List<User> projectUser = project.getMembers();
-            projectUser.add(user);
+            Member member = new Member(null,user,assignProjectRequest.getUserRole());
+            memberRepository.save(member);
+
+            List<Member> projectUser = project.getMembers();
+            projectUser.add(member);
             project.setMembers(projectUser);
             projectRepository.save(project);
             return new ResponseEntity<>(new ApiResponse<>(200,"Assigned Successfully!",null),HttpStatus.OK);
@@ -95,11 +129,39 @@ public class ProjectServiceImpl implements ProjectService {
             return new ResponseEntity<>(new ApiResponse<>(200,"User Not Found!",null),HttpStatus.OK);
         }
     }
+// @Override
+//    public ResponseEntity<ApiResponse<User>> AssignProject(AssignProjectRequest assignProjectRequest) {
+//        String projectId = assignProjectRequest.getProjectId();
+//        String userEmail = assignProjectRequest.getUserEmail();
+//
+//        Project project = projectRepository.getById(projectId);
+//        Optional<User> userOptional = userRepository.findByEmail(userEmail);
+//
+//        if (userOptional.isPresent()){
+//            User user = userRepository.getById(userOptional.get().getId());
+//            List<Project> projectList = user.getProjects();
+//            projectList.add(project);
+//            user.setProjects(projectList);
+//            userRepository.save(user);
+//
+//            User userPush = userRepository.getById(userOptional.get().getId());
+//            userPush.setRoles(getRolesFromStringToRole(assignProjectRequest.getUserRole()));
+//
+//            List<User> projectUser = project.getMembers();
+//            projectUser.add(user);
+//            project.setMembers(projectUser);
+//            projectRepository.save(project);
+//            return new ResponseEntity<>(new ApiResponse<>(200,"Assigned Successfully!",null),HttpStatus.OK);
+//        }
+//        else {
+//            return new ResponseEntity<>(new ApiResponse<>(200,"User Not Found!",null),HttpStatus.OK);
+//        }
+//    }
 
     @Override
-    public ResponseEntity<ApiResponse<List<User>>> getProjectMembers(String id) {
+    public ResponseEntity<ApiResponse<List<Member>>> getProjectMembers(String id) {
         Project project = projectRepository.findById(id).get();
-        List<User> users = project.getMembers();
+        List<Member> users = project.getMembers();
 
         return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",users),HttpStatus.OK);
     }
@@ -123,15 +185,15 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<GetDeveloperRequest> getDeveloperList(String id) {
-        Project project = projectRepository.getById(id);
-        List<User> users = project.getMembers();
-        List<GetDeveloperRequest> getDeveloperRequests;
-        for (User user:users) {
-            if (user.getRoles().contains("DEVELOPER")){
-
-            }
-        }
-        return null;
+//    Project project = projectRepository.getById(id);
+//    List<Member> users = project.getMembers();
+//    List<GetDeveloperRequest> getDeveloperRequests;
+//    for (Member user:users) {
+//        if (user.getRoles().contains("DEVELOPER")){
+//
+//        }
+//    }
+    return null;
     }
 
     public Set<Role> getRolesFromStringToRole(Set<String> roles2) {

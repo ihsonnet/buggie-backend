@@ -9,8 +9,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AssignProjectRequest {
+public class AssignProjectRequest1 {
     private String projectId;
     private String userEmail;
-    private String userRole;
+    private Set<String> userRole;
 }
