@@ -1,8 +1,7 @@
 package com.testingtool.buggie.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +19,7 @@ public class Bug {
     private String id;
     private String title;
     private String type;
+    @JsonIgnore
     @Column(columnDefinition="TEXT")
     private String description;
     private String status;

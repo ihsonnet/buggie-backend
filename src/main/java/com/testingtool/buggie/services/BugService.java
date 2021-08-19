@@ -3,6 +3,7 @@ package com.testingtool.buggie.services;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddBugRequest;
 import com.testingtool.buggie.dto.request.ChangeStatusRequest;
+import com.testingtool.buggie.dto.response.BugInfoResponse;
 import com.testingtool.buggie.model.Bug;
 import org.springframework.http.ResponseEntity;
 
@@ -24,4 +25,6 @@ public interface BugService {
     ResponseEntity<ApiResponse<Bug>> changeApproveStatus(ChangeStatusRequest changeStatusRequest);
 
     ResponseEntity<ApiResponse<List<Bug>>> getBugByTeam(String id);
+
+    ResponseEntity<ApiResponse<BugInfoResponse>> getBugInfo(String id);
 }

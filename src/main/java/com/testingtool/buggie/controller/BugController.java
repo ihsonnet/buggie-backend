@@ -3,6 +3,7 @@ package com.testingtool.buggie.controller;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddBugRequest;
 import com.testingtool.buggie.dto.request.ChangeStatusRequest;
+import com.testingtool.buggie.dto.response.BugInfoResponse;
 import com.testingtool.buggie.model.Bug;
 import com.testingtool.buggie.services.BugService;
 import lombok.AllArgsConstructor;
@@ -59,5 +60,10 @@ public class BugController {
     @PutMapping("/change-approve-status")
     public ResponseEntity<ApiResponse<Bug>> changeApproveStatus(@RequestBody ChangeStatusRequest changeStatusRequest){
         return bugService.changeApproveStatus(changeStatusRequest);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<BugInfoResponse>> getBugInfo(@RequestParam String id){
+        return bugService.getBugInfo(id);
     }
 }

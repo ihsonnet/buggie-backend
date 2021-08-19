@@ -3,6 +3,7 @@ package com.testingtool.buggie.services;
 import com.testingtool.buggie.dto.ApiResponse;
 import com.testingtool.buggie.dto.request.AddBugRequest;
 import com.testingtool.buggie.dto.request.ChangeStatusRequest;
+import com.testingtool.buggie.dto.response.BugInfoResponse;
 import com.testingtool.buggie.jwt.model.User;
 import com.testingtool.buggie.jwt.repository.UserRepository;
 import com.testingtool.buggie.model.Bug;
@@ -148,6 +149,18 @@ public class BugServiceImpl implements BugService{
         else {
             return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",null),HttpStatus.OK);
         }
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse<BugInfoResponse>> getBugInfo(String id) {
+        Bug bug = bugRepository.getById(id);
+
+        BugInfoResponse bugInfoResponse = new BugInfoResponse();
+
+        bugInfoResponse.setTitle(bug.getTitle());
+        bugInfoResponse.setDescription(bug.getDescription());
+
+        return new ResponseEntity<>(new ApiResponse<>(200,"Data Found",bugInfoResponse),HttpStatus.OK);
     }
 
 
