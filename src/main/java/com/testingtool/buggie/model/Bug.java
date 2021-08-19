@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -19,6 +20,7 @@ public class Bug {
     private String id;
     private String title;
     private String type;
+    @Column(columnDefinition="TEXT")
     private String description;
     private String status;
     private String comment;

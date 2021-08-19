@@ -22,8 +22,10 @@ public class Project {
     private String description;
     @ManyToMany
     @JsonIgnore
-    private List<User> members;
+    private List<User> memberList;
     private String created_by;
     private String created_on;
-
+    @ManyToMany
+    @JsonIgnore
+    private List<Member> members;
 }

@@ -6,6 +6,7 @@ import com.testingtool.buggie.dto.request.AssignProjectRequest;
 import com.testingtool.buggie.dto.request.GetDeveloperRequest;
 import com.testingtool.buggie.dto.response.ProjectInfoResponse;
 import com.testingtool.buggie.jwt.model.User;
+import com.testingtool.buggie.model.Member;
 import com.testingtool.buggie.model.Project;
 import com.testingtool.buggie.services.ProjectService;
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class ProjectController {
     }
 
     @GetMapping("/members/{id}")
-    public ResponseEntity<ApiResponse<List<User>>> getProjectMembers(@RequestParam String id){
+    public ResponseEntity<ApiResponse<List<Member>>> getProjectMembers(@RequestParam String id){
         return projectService.getProjectMembers(id);
     }
 
